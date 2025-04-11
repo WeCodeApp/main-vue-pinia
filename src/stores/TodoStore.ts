@@ -13,11 +13,9 @@ export interface TodoItems {
 
 export const useTodoStore = defineStore('todoStore', {
     state: () => ({
-        todos: [
-            { id: 1, title: 'Buy milk', isFav: false },
-            { id: 2, title: 'Read books', isFav: true }
-        ],
-        name: 'Yve'
+        todos: [] as TodoItems[],
+        name: 'Yve',
+        loading: false as boolean
     }),
     getters: {
         favs(): TodoItems[] {
@@ -33,6 +31,14 @@ export const useTodoStore = defineStore('todoStore', {
         }
     },
     actions: {
+        async getTodo() {
+            this.loading = true
+            const res = await fetch('http://localhost:3000/todos')
+            const data = await res.json()
+
+            this.todos = data
+            this.loading = false
+        },
         addTodo(todo: TodoItems) {
             this.todos.push(todo)
         },

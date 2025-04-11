@@ -5,6 +5,9 @@ import TodoForm from './components/TodoForm.vue'
 import { useTodoStore } from './stores/TodoStore';
 
 const todoStore = useTodoStore()
+
+todoStore.getTodo()
+
 const filter = ref('all')
 
 </script>
@@ -26,6 +29,9 @@ const filter = ref('all')
   </div>
   <div class="new-task-form">
     <TodoForm />
+  </div>
+  <div v-if="todoStore.loading" class="loading">
+    Loading todos...
   </div>
   <nav class="filter">
     <button @click="filter ='all'">All Tasks</button>
