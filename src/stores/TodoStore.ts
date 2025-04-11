@@ -13,5 +13,10 @@ export const useTodoStore = defineStore('todoStore', {
             { id: 2, title: 'Read books', isFav: true }
         ],
         name: 'Yve'
-    })
+    }),
+    getters: {
+        favs(): TodoItems[] {
+            return this.todos.filter(todo => todo.isFav)
+        }
+    }
 })

@@ -7,8 +7,18 @@ const todoStore = useTodoStore()
 
 <template>
   <h1> Todo List</h1>
-  <div v-for="todo in todoStore.todos" :key="todo.id">
-    <TodoDetails :todo="todo"/>
+  <div class="task-list">
+    <p>All Task</p>
+    <div v-for="todo in todoStore.todos" :key="todo.id">
+      <TodoDetails :todo="todo"/>
+    </div>
+  </div>
+
+  <div class="task-list">
+    <p>Fav Task</p>
+    <div v-for="todo in todoStore.favs" :key="todo.id">
+      <TodoDetails :todo="todo"/>
+    </div>
   </div>
   
 </template>
