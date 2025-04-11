@@ -39,18 +39,51 @@ export const useTodoStore = defineStore('todoStore', {
             this.todos = data
             this.loading = false
         },
-        addTodo(todo: TodoItems) {
+        async addTodo(todo: TodoItems) {
             this.todos.push(todo)
+
+            const res = await fetch('http://localhost:3000/todos', {
+                method: 'POST',
+                body: JSON.stringify(todo),
+                headers: { 'Content-Type': 'application/json'}
+            })
+
+            if (!res.ok) {
+                const errorData = await res.json()
+                console.log(errorData.message || 'An error occured while adding todo')
+            }
+            
         },
-        deleteTodo(id: number) {
+        async deleteTodo(id: number) {
             this.todos = this.todos.filter(todo => {
                 return todo.id !== id
             })
+
+            const res = await fetch('http://localhost:3000/todos/' + id, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json'}
+            })
+
+            if (!res.ok) {
+                const errorData = await res.json()
+                console.log(errorData.message || 'An error occured while adding todo')
+            }
         },
-        toggleFave(id: number) {
+        async toggleFave(id: number) {
             const todo = this.todos.find(todo => todo.id === id)
             if (todo) {
                 todo.isFav = !todo.isFav
+            }
+
+            const res = await fetch('http://localhost:3000/todos/' + id, {
+                method: 'PATCH',
+                body: JSON.stringify(todo),
+                headers: { 'Content-Type': 'application/json'}
+            })
+
+            if (!res.ok) {
+                const errorData = await res.json()
+                console.log(errorData.message || 'An error occured while adding todo')
             }
         }
     }

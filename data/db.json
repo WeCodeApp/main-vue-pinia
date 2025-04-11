@@ -1,6 +1,14 @@
 {
-    "todos": [
-        { "id": 1, "title": "Buy milk", "isFav": false },
-        { "id": 2, "title": "Read books", "isFav": true }
-    ]
+  "todos": [
+    {
+      "id": 1,
+      "title": "Buy milk",
+      "isFav": true
+    },
+    {
+      "id": 2,
+      "title": "Read books",
+      "isFav": true
+    }
+  ]
 }
