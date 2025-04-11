@@ -1,25 +1,33 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import TodoDetails from './components/TodoDetails.vue';
 import { useTodoStore } from './stores/TodoStore';
 
 const todoStore = useTodoStore()
+const filter = ref('all')
+
 </script>
 
 <template>
   <h1> Todo List</h1>
-  <div class="task-list">
+  <div class="task-list" v-if="filter === 'all'">
     <p>All Task</p>
     <div v-for="todo in todoStore.todos" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
   </div>
 
-  <div class="task-list">
+  <div class="task-list" v-if="filter === 'favs'">
     <p>Fav Task</p>
     <div v-for="todo in todoStore.favs" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
   </div>
+
+  <nav class="filter">
+    <button @click="filter ='all'">All Tasks</button>
+    <button @click="filter ='favs'">Favs</button>
+  </nav>
   
 </template>
 
