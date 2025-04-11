@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import TodoDetails from './components/TodoDetails.vue';
 import TodoForm from './components/TodoForm.vue'
 import { useTodoStore } from './stores/TodoStore';
+import { storeToRefs } from 'pinia';
 
 const todoStore = useTodoStore()
 
@@ -10,27 +11,30 @@ todoStore.getTodo()
 
 const filter = ref('all')
 
+const { todos, loading, favs, totalCount, favCount } = storeToRefs(todoStore)
+
 </script>
 
 <template>
   <h1> Todo List</h1>
   <div class="task-list" v-if="filter === 'all'">
-    <p>You have {{ todoStore.totalCount }} todos</p>
-    <div v-for="todo in todoStore.todos" :key="todo.id">
+    <p>You have {{ totalCount }} todos</p>
+    <div v-for="todo in todos" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
   </div>
 
   <div class="task-list" v-if="filter === 'favs'">
-    <p>You have {{ todoStore.favCount }} fave todos</p>
-    <div v-for="todo in todoStore.favs" :key="todo.id">
+    <p>You have {{ favCount }} fave todos</p>
+    <div v-for="todo in favs" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
   </div>
+  <button @click="todoStore.$reset">Reset state</button>
   <div class="new-task-form">
     <TodoForm />
   </div>
-  <div v-if="todoStore.loading" class="loading">
+  <div v-if="loading" class="loading">
     Loading todos...
   </div>
   <nav class="filter">

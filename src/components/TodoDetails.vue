@@ -4,7 +4,7 @@
         <div class="icons">
             <i 
             class="material-icons"
-            @click="todoStore.deleteTodo(props.todo.id)"
+            @click="handleDelete"
             > delete </i>
             <i 
             class="material-icons"
@@ -21,6 +21,12 @@ import { useTodoStore, type TodoItems } from '@/stores/TodoStore';
 const props = defineProps<{
     todo: TodoItems
 }>()
+
+const handleDelete = () => {
+    if (confirm("Are you sure to delete?") == true) {
+        todoStore.deleteTodo(props.todo.id)
+    }
+}
 
 const todoStore = useTodoStore()
 </script>
