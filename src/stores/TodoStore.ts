@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia'
 
+interface TodoStoreState {
+    todos: TodoItems[],
+    name: string
+}
+
 export interface TodoItems {
     id: number,
     title: string,
@@ -17,6 +22,14 @@ export const useTodoStore = defineStore('todoStore', {
     getters: {
         favs(): TodoItems[] {
             return this.todos.filter(todo => todo.isFav)
+        },
+        favCount(): number {
+            return this.todos.reduce((prev, curr) => {
+                return curr.isFav ? prev+1 : prev
+            }, 0)
+        },
+        totalCount: (state: TodoStoreState) => {
+            return state.todos.length
         }
     }
 })

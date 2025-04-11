@@ -11,14 +11,14 @@ const filter = ref('all')
 <template>
   <h1> Todo List</h1>
   <div class="task-list" v-if="filter === 'all'">
-    <p>All Task</p>
+    <p>You have {{ todoStore.totalCount }} todos</p>
     <div v-for="todo in todoStore.todos" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
   </div>
 
   <div class="task-list" v-if="filter === 'favs'">
-    <p>Fav Task</p>
+    <p>You have {{ todoStore.favCount }} fave todos</p>
     <div v-for="todo in todoStore.favs" :key="todo.id">
       <TodoDetails :todo="todo"/>
     </div>
