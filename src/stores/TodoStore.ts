@@ -31,5 +31,10 @@ export const useTodoStore = defineStore('todoStore', {
         totalCount: (state: TodoStoreState) => {
             return state.todos.length
         }
+    },
+    actions: {
+        addTodo(todo: TodoItems) {
+            this.todos.push(todo)
+        }
     }
 })

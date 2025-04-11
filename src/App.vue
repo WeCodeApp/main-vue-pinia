@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import TodoDetails from './components/TodoDetails.vue';
+import TodoForm from './components/TodoForm.vue'
 import { useTodoStore } from './stores/TodoStore';
 
 const todoStore = useTodoStore()
@@ -23,7 +24,9 @@ const filter = ref('all')
       <TodoDetails :todo="todo"/>
     </div>
   </div>
-
+  <div class="new-task-form">
+    <TodoForm />
+  </div>
   <nav class="filter">
     <button @click="filter ='all'">All Tasks</button>
     <button @click="filter ='favs'">Favs</button>
