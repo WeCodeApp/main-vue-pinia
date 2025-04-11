@@ -8,14 +8,16 @@ interface TodoStoreState {
 export interface TodoItems {
     id: number,
     title: string,
-    isFav: boolean
+    isFav?: boolean
 }
 
 export const useTodoStore = defineStore('todoStore', {
     state: () => ({
         todos: [] as TodoItems[],
         name: 'Yve',
-        loading: false as boolean
+        loading: false as boolean,
+        limit: 5,
+        page: 1
     }),
     getters: {
         favs(): TodoItems[] {
@@ -31,9 +33,16 @@ export const useTodoStore = defineStore('todoStore', {
         }
     },
     actions: {
-        async getTodo() {
+        async getTodo(direction: string|null) {
             this.loading = true
-            const res = await fetch('http://localhost:3000/todos')
+
+            if (direction === 'next') {
+                this.page++
+            } else if (direction === 'prev') {
+                this.page--
+            }
+
+            const res = await fetch('http://localhost:3000/todos?_page='+this.page+'&_limit='+ this.limit)
             const data = await res.json()
 
             this.todos = data

@@ -7,11 +7,23 @@ import { storeToRefs } from 'pinia';
 
 const todoStore = useTodoStore()
 
-todoStore.getTodo()
+todoStore.getTodo('initial')
 
 const filter = ref('all')
 
 const { todos, loading, favs, totalCount, favCount } = storeToRefs(todoStore)
+
+const searchTodo = () => {
+
+}
+
+const handleNext = () => {
+  todoStore.getTodo('next')
+}
+
+const handlePrev = () => {
+  todoStore.getTodo('prev')
+}
 
 </script>
 
@@ -30,6 +42,7 @@ const { todos, loading, favs, totalCount, favCount } = storeToRefs(todoStore)
       <TodoDetails :todo="todo"/>
     </div>
   </div>
+
   <button @click="todoStore.$reset">Reset state</button>
   <div class="new-task-form">
     <TodoForm />
@@ -40,6 +53,11 @@ const { todos, loading, favs, totalCount, favCount } = storeToRefs(todoStore)
   <nav class="filter">
     <button @click="filter ='all'">All Tasks</button>
     <button @click="filter ='favs'">Favs</button>
+  </nav>
+
+  <nav class="pagination">
+    <button @click="handlePrev">Prev Page</button>
+    <button @click="handleNext">Next Page</button>
   </nav>
   
 </template>
