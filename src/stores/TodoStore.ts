@@ -35,6 +35,17 @@ export const useTodoStore = defineStore('todoStore', {
     actions: {
         addTodo(todo: TodoItems) {
             this.todos.push(todo)
+        },
+        deleteTodo(id: number) {
+            this.todos = this.todos.filter(todo => {
+                return todo.id !== id
+            })
+        },
+        toggleFave(id: number) {
+            const todo = this.todos.find(todo => todo.id === id)
+            if (todo) {
+                todo.isFav = !todo.isFav
+            }
         }
     }
 })
